@@ -27,6 +27,8 @@ class RegisterUserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+from django.middleware.csrf import get_token
+
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -36,7 +38,11 @@ class LoginView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return Response({"message": "Logged in successfully"}, status=status.HTTP_200_OK)
+            csrf_token = get_token(request)  # Generate CSRF token
+            return Response({
+                "message": "Logged in successfully",
+                "csrfToken": csrf_token
+            }, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -52,6 +58,10 @@ class FarmerProfileViewSet(viewsets.ModelViewSet):
     queryset = FarmerProfileInfo.objects.all()
     serializer_class = FarmerProfileSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        print("Incoming request data:", serializer.validated_data)
+        serializer.save(user=self.request.user)
 
 
 class CropInfoViewSet(viewsets.ModelViewSet):

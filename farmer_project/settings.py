@@ -44,24 +44,35 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = False  
+CORS_ALLOW_CREDENTIALS = True
 # Allow CORS for frontend
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Update to match your React app's URL
+    "http://localhost:3000",
+    'http://127.0.0.1:3000',  # Update to match your React app's URL
 ]
-
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",  # Update to match your React app's URL
+    'http://127.0.0.1:3000',
 ]
+
+# Make sure this is set to true to include cookies in cross-domain requests
+SESSION_COOKIE_SAMESITE = 'None'  # Adjust based on your needs
+SESSION_COOKIE_SECURE = False  # Change to True if using HTTPS
+CSRF_COOKIE_SAMESITE = 'None'  # Adjust based on your needs
+CSRF_COOKIE_SECURE = False  # Change to True if using HTTPS
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'farmer_project.urls'
 
@@ -151,4 +162,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'farm.CustomUser'

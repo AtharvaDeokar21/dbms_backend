@@ -26,7 +26,13 @@ class UserSerializer(serializers.ModelSerializer):
 class FarmerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = FarmerProfileInfo
-        fields = '__all__'
+        fields = ['farmer_id', 'first_name', 'middle_name', 'last_name', 'phone_number', 'location', 'land_area']
+
+    def create(self, validated_data):
+        # Automatically set the user to the currently logged-in user
+        request = self.context.get('request')
+        validated_data['user'] = request.user
+        return super().create(validated_data)
 
 # CropInfo Serializer
 class CropInfoSerializer(serializers.ModelSerializer):
