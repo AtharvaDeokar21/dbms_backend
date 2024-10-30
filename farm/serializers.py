@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import FarmerProfileInfo, CropInfo, FertilizerPesticideInfo, MarketData
+from .models import FarmerProfileInfo, CropInfo, FertilizerPesticideInfo, Sales, ManageCrop, Grows
 
 User = get_user_model()
 
@@ -40,8 +40,20 @@ class FertilizerPesticideInfoSerializer(serializers.ModelSerializer):
         model = FertilizerPesticideInfo
         fields = '__all__'
 
-# MarketData Serializer
-class MarketDataSerializer(serializers.ModelSerializer):
+# Sales Serializer
+class SalesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MarketData
+        model = Sales
+        fields = '__all__'
+
+# ManageCrop Serializer
+class ManageCropSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManageCrop
+        fields = '__all__'
+
+# Grows Serializer
+class GrowsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Grows
         fields = '__all__'

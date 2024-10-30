@@ -4,9 +4,11 @@ from .views import (
     FarmerProfileViewSet,
     CropInfoViewSet,
     FertilizerPesticideInfoViewSet,
-    MarketDataViewSet,
+    SalesViewSet,
     RegisterUserView,
     LoginView,
+    ManageCropViewSet, 
+    GrowsViewSet, 
     LogoutView
 )
 
@@ -14,7 +16,9 @@ router = DefaultRouter()
 router.register(r'farmers', FarmerProfileViewSet)
 router.register(r'crops', CropInfoViewSet)
 router.register(r'fertilizers', FertilizerPesticideInfoViewSet)
-router.register(r'market-data', MarketDataViewSet)
+router.register(r'market-data', SalesViewSet)
+router.register(r'managecrop', ManageCropViewSet)
+router.register(r'grows', GrowsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

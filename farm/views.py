@@ -4,12 +4,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import FarmerProfileInfo, CropInfo, FertilizerPesticideInfo, MarketData
+from .models import FarmerProfileInfo, CropInfo, FertilizerPesticideInfo, Sales, ManageCrop, Grows
 from .serializers import (
     FarmerProfileSerializer,
     CropInfoSerializer,
     FertilizerPesticideInfoSerializer,
-    MarketDataSerializer,
+    SalesSerializer,
+    ManageCropSerializer, 
+    GrowsSerializer, 
     UserSerializer
 )
 
@@ -64,7 +66,17 @@ class FertilizerPesticideInfoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class MarketDataViewSet(viewsets.ModelViewSet):
-    queryset = MarketData.objects.all()
-    serializer_class = MarketDataSerializer
+class SalesViewSet(viewsets.ModelViewSet):
+    queryset = Sales.objects.all()
+    serializer_class = SalesSerializer
+    permission_classes = [IsAuthenticated]
+
+class ManageCropViewSet(viewsets.ModelViewSet):
+    queryset = ManageCrop.objects.all()
+    serializer_class = ManageCropSerializer
+    permission_classes = [IsAuthenticated]
+
+class GrowsViewSet(viewsets.ModelViewSet):
+    queryset = Grows.objects.all()
+    serializer_class = GrowsSerializer
     permission_classes = [IsAuthenticated]
